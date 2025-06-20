@@ -2,13 +2,34 @@
 title: "Economic Connectedness"
 format: html
 ---
-
+The `connectedness` dataset from the `primer.data` package offers insight into the social and economic ties across U.S. counties. It includes variables such as the name of the county, its population, and a connectedness score—a numerical representation of how socially integrated a county is relative to others. Generally, counties with larger populations tend to exhibit higher connectedness scores, suggesting that urbanization may foster more inter-county relationships, potentially through factors like increased mobility, economic activity, and digital communication. However, the data also reveals notable variation, indicating that population alone doesn't fully determine connectedness. This makes the dataset useful for exploring regional disparities, informing policy decisions, and understanding the dynamics of community interaction in modern America.
 
 ```{r}
 #| echo: false
 #| warning: false
 library(primer.data)
 library(tidyverse)
+
+
+connectedness %>% 
+  ggplot(aes(x = population, y = connectedness)) +
+  geom_point(color = "#2C77B1", alpha = 0.6, size = 2.5) +
+  geom_smooth(method = "lm", color = "#E15759", se = TRUE, linetype = "dashed") +
+  scale_x_log10(labels = scales::comma) +
+  labs(
+    title = "Connectedness vs. Population of US Counties",
+    subtitle = "Larger counties tend to show higher connectedness, but with notable variation",
+    x = "County Population (log scale)",
+    y = "Connectedness Score",
+    caption = "Data source: primer.data"
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    plot.title = element_text(face = "bold", size = 16),
+    plot.subtitle = element_text(size = 12, margin = margin(b = 10)),
+    plot.caption = element_text(size = 10, face = "italic"),
+    panel.grid.minor = element_blank()
+  )
 ```
 
-The `connectedness` dataset from the `primer.data` package offers insight into the social and economic ties across U.S. counties. It includes variables such as the name of the county, its population, and a connectedness score—a numerical representation of how socially integrated a county is relative to others. Generally, counties with larger populations tend to exhibit higher connectedness scores, suggesting that urbanization may foster more inter-county relationships, potentially through factors like increased mobility, economic activity, and digital communication. However, the data also reveals notable variation, indicating that population alone doesn't fully determine connectedness. This makes the dataset useful for exploring regional disparities, informing policy decisions, and understanding the dynamics of community interaction in modern America.
+
